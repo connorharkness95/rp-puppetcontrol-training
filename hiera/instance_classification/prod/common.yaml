@@ -1,0 +1,3 @@
+# This is the common hiera data file for the prod tier. Configuration
+# directives defined here will be applied to all nodes in the production tier
+# of your environment.

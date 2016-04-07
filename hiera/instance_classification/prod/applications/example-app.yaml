@@ -1,0 +1,40 @@
+# This is an example data file that includes class assignments, simple class
+# parameters and complex data types such as arrays and hashes.
+
+classes:
+  - git
+  - tio_role::jenkins_master
+  - nginx
+
+rap_puppet_jenkins::include_job_builder: true
+
+rap_puppet_jenkins::jobs:
+  - path: '/etc/jenkins_jobs/config/jenkins-backup.yml'
+    name: 'jenkins-backup'
+
+jenkins::executors: 0
+
+jenkins::plugin_hash:
+  'git': {}
+  'description-setter': {}
+  'hipchat': {}
+  'ansicolor': {}
+  'parameterized-trigger': {}
+  'envinject': {}
+  'greenballs': {}
+  'exclusive-execution': {}
+  'swarm': {}
+  'git-client' : {}
+  'ssh-credentials': {}
+  'mailer': {}
+  'matrix-project': {}
+  'credentials': {}
+  'scm-api': {}
+  'workflow-step-api': {}
+  'junit': {}
+  'matrix-project': {}
+
+nginx::nginx_vhosts:
+  'jenkins.systems':
+    listen_port: 80
+    proxy: 'http://localhost:8080'

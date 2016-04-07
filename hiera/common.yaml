@@ -1,0 +1,2 @@
+# This is the top-level hiera data file for your environment. Configuration
+# directives defined here will be applied to all nodes in your environment. 

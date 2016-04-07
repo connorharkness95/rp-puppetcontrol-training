@@ -1,0 +1,42 @@
+# This data file is applied to instances classified with the puppet_server role
+# in the production tier of your environment. This is the default for puppet
+# masters deployed using the rap-terraform-puppetserver module.
+
+---
+classes:
+  - role::puppet_server
+
+hiera::hierarchy:
+  - "production/environments/%{literal('%')}{::environment}"
+  - "production/global"
+  - "%%{%}{::environment}/instance_classification/%%{%}{::instance_tier}/applications/%%{%}{::instance_application}"
+  - "%%{%}{::environment}/instance_classification/%%{%}{::instance_tier}/roles/%%{%}{::instance_role}"
+  - "%%{%}{::environment}/instance_classification/%%{%}{::instance_tier}/common"
+  - "%%{%}{::environment}/common"
+
+hiera::eyaml_extension: 'yaml'
+hiera::datadir: '/etc/puppetlabs/code/hiera'
+hiera::hiera_yaml: '/etc/puppetlabs/code/hiera.yaml'
+hiera::datadir_manage: false
+hiera::master_service: 'puppetserver'
+hiera::provider: 'puppetserver_gem'
+hiera::puppet_conf_manage: false
+hiera::eyaml_version: 'latest'
+hiera::eyaml: true
+
+puppetdb::master::config::puppetdb_server: "puppet"
+puppetdb::master::config::puppet_confdir: "/etc/puppetlabs/puppet"
+puppetdb::master::config::puppet_conf: "/etc/puppetlabs/puppet/puppet.conf"
+puppetdb::master::config::manage_report_processor: true
+puppetdb::master::config::enable_reports: true
+puppetdb::server::database_host: "%{::puppetdb_address}"
+puppetdb::server::database_username: "%{::puppetdb_user}"
+puppetdb::server::database_password: "%{::puppetdb_password}"
+puppetdb::server::manage_firewall: false
+
+python::pip: 'latest'
+python::python_pips:
+  "pypuppetdb":
+    ensure: 'latest'
+  "boto3":
+    ensure: 'latest'
