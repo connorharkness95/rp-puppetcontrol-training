@@ -5,7 +5,9 @@
 This repository provides a Puppet control repository template that can be used
 with r10k, hiera and puppet server.
 
+
 Primary components provided include:
+
 - An environment configuration file that correctly implements:
   * A site directory that contains roles and profiles for your environment.
   * Configuration version based on git commit ID.
