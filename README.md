@@ -21,7 +21,7 @@ This control repository should be used in conjunction with a puppet server deplo
 See [rap-terraform-puppetserver](https://gitlab.et-scm.com/tio/rap-terraform-puppetserver) for details about deploying a new Puppet Server.
 
 ## Usage
-1. Create a new empty repository (rap-puppetcontrol-testing).
+1. Create a new empty repository (e.g. rap-puppetcontrol-testing).
 2. Make a bare clone of the puppet control skeleton repository.
 ```
 git clone --bare git@gitlab.et-scm.com:tio/rap-puppetcontrol-skeleton.git
@@ -40,7 +40,7 @@ rm -rf rap-puppetcontrol-skeleton
 ```
 git clone git@gitlab.et-scm.com:tio/rap-puppetcontrol-test.git
 ```
-6. Enable the Puppet_DeployKey deploy key on your repository.
+6. Enable the Puppet_DeployKey deploy key on your new repository.
   * Browse to [GitLab](https://gitlab.et-scm.com/)
   * Navigate to the new repository you created
   * Select `Settings` -> `Deploy Keys`
