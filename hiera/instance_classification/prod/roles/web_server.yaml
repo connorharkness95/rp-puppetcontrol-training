@@ -1,0 +1,20 @@
+# This data file is applied to instances classified with the web_server role
+# in the production tier of your environment. It includes an example of how
+# to create users and authorized SSH keys on instances.
+
+---
+# Creates local user(s), associating SSH public keys to provide access.
+accounts::users:
+  'e.westfall':
+    comment : 'Eric Westfall <e.westfall@elsevier.com>'
+    ensure  : 'present' # To completely remove account, set to absent.
+    locked  : false     # To lock account, set to true.
+    sshkeys :
+      # An array of SSH public keys associated with the user. These should be
+      # complete public key strings that include the type and name of the key,
+      # exactly as the key would appear in its id_rsa.pub
+      - 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDzKY0GuEwtZenZRtN0qs3tnK1L3d5UjxDKBrAjV3IniCW47STiP2QbhoH4W/AqO8nwzBKjtHMaVbUYaLPBrEMjC7env6+tJaBBV/l3BNMK9vqv37UT7e5o/H/vptwKdjfn1YAjCIVBoqQU5vtcYHLPwZHAHt51s5gFaTx9IHbdAkfi/5h5+7KBYbzSeBhHFx0GJC4sXA5eFQsau6QNfSO4q8ttwfLxcwdXGmfSleOoDu3kRlzrwTi5ZYDTM2ydqpkD3uT2sGM0z5T2dGmhS9i9nEs4KbxIRE2EkDjtQfq0n0Lg+/f6RkZJNiy8cNsYo3rXc6VGJ9enh3lWMXIzMyqJ e.westfall@elsevier.com'
+    groups  :
+      # The adm group exists on Centos, Debian and Ubuntu. If you're using
+      # Amazon Linux or Red Hat, use the wheel group.
+      - 'adm'

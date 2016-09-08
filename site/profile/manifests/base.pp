@@ -3,5 +3,13 @@
 # profile.
 
 class profile::base {
+  # If an accounts::users hash has been defined in hiera, then enable user
+  # and sudo management.
+  $accounts = hiera_hash('accounts::users', undef)
+  if $accounts {
+    contain sudo
+    contain sudo::configs
 
+    create_resources('accounts::user', $accounts)
+  }
 }

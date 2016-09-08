@@ -1,2 +1,22 @@
 # This is the top-level hiera data file for your environment. Configuration
-# directives defined here will be applied to all nodes in your environment. 
+# directives defined here will be applied to all nodes in your environment.
+---
+classes:
+  - profile::base
+
+# Ensures the sudo configuration directory (/etc/sudoers.d/) is not
+# purged and the sudo config file (/etc/sudo.conf) is not replaced.
+# Can be overriden in lower hiera data files.
+sudo::config_file_replace: false
+sudo::purge: false
+
+# Ensures members of the wheel and adm group can run any command with elevated
+# privilege and switch to the root user without being prompted for a password.
+# This replicates the behavior of the default cloud-init configured user.
+sudo::configs:
+  'wheel-users':
+    'content': '%wheel ALL=(ALL) NOPASSWD: ALL'
+    'priority': 80
+  'admin-users':
+    'content': '%adm ALL=(ALL) NOPASSWD: ALL'
+    'priority': 80
