@@ -1,3 +1,0 @@
-# This is the common hiera data file for the dev tier. Configuration
-# directives defined here will be applied to all nodes in the development tier
-# of your environment.
