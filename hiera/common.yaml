@@ -1,2 +1,11 @@
 # This is the top-level hiera data file for your environment. Configuration
-# directives defined here will be applied to all nodes in your environment. 
+# directives defined here will be applied to all nodes in your environment.
+---
+classes:
+  - profile::base
+
+# Ensures the sudo configuration directory (/etc/sudoers.d/) is not
+# purged and the sudo config file (/etc/sudo.conf) is not replaced.
+# Can be overriden in lower hiera data files.
+sudo::config_file_replace: false
+sudo::purge: false
