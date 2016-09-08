@@ -9,3 +9,14 @@ classes:
 # Can be overriden in lower hiera data files.
 sudo::config_file_replace: false
 sudo::purge: false
+
+# Ensures members of the wheel and adm group can run any command with elevated
+# privilege and switch to the root user without being prompted for a password.
+# This replicates the behavior of the default cloud-init configured user.
+sudo::configs:
+  'wheel-users':
+    'content': '%wheel ALL=(ALL) NOPASSWD: ALL'
+    'priority': 80
+  'admin-users':
+    'content': '%adm ALL=(ALL) NOPASSWD: ALL'
+    'priority': 80

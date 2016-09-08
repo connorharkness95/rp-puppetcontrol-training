@@ -18,14 +18,3 @@ accounts::users:
       # The adm group exists on Centos, Debian and Ubuntu. If you're using
       # Amazon Linux or Red Hat, use the wheel group.
       - 'adm'
-
-# Ensures members of the wheel and adm group can run any command with elevated
-# privilege and switch to the root user without being prompted for a password.
-# This replicates the behavior of the default cloud-init configured user.
-sudo::configs:
-  'wheel-users':
-    'content': '%wheel ALL=(ALL) NOPASSWD: ALL'
-    'priority': 80
-  'admin-users':
-    'content': '%adm ALL=(ALL) NOPASSWD: ALL'
-    'priority': 80
