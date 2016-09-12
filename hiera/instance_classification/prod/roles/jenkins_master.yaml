@@ -1,0 +1,85 @@
+# This data file is applied to instances classified with the jenkins_master role
+# in the production tier of your environment. It includes an example of how to
+# configure a Jenkins Master instance
+---
+classes:
+  - role::jenkins_master
+  - rap_puppet_jenkins::git
+
+# Configure:
+#   - Jenkins version to install
+#   - Number of executors on the master
+#   - Jenkins firewall to false
+jenkins::version: '2.21'
+jenkins::executors: 4
+jenkins::configure_firewall: false
+
+# Configure:
+#   - The JenkinsControl Git repository containing the job configurations
+#   - The directory under jobs which will be used to configure this Jenkins
+rap_puppet_jenkins::seed_job::seed_job_jobs_url: 'git@gitlab.et-scm.com:tio-rap-london/rap-jenkinscontrol-skeleton.git'
+rap_puppet_jenkins::seed_job::seed_job_jobs_directory: 'prod'
+
+# Configure:
+#   - The ssh private key to use to connect with Git. Encrypted using eyaml
+rap_puppet_jenkins::git::ssh_private_key: >
+    ENC[PKCS7,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
+    bClcKqKBZwq+01pTDKv6GFopAhfA3PJv]
+
+# Configure:
+#   - The Jenkins plugins to install and the version
+jenkins::plugin_hash:
+  'ace-editor':
+    version: '1.1'
+  'docker-commons':
+    version: '1.4.0'
+  'handlebars':
+    version: '1.1.1'
+  'matrix-project':
+    version: '1.7.1'
+  'pipeline-stage-view':
+    version: '2.0'
