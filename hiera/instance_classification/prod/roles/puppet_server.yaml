@@ -24,7 +24,7 @@ hiera::eyaml_extension: 'yaml'
 hiera::eyaml_version: '2.1.0'
 hiera::eyaml: true
 
-puppetdb::globals:version: "4.0.0-1.el7"
+puppetdb::globals:version: "4.3.0-1.el7"
 puppetdb::master::config::puppetdb_server: "puppet"
 puppetdb::master::config::puppet_confdir: "/etc/puppetlabs/puppet"
 puppetdb::master::config::puppet_conf: "/etc/puppetlabs/puppet/puppet.conf"
@@ -38,8 +38,10 @@ puppetdb::server::manage_firewall: false
 python::pip: 'latest'
 python::python_pips:
   "pypuppetdb":
-    ensure: '0.2.1'
+    ensure: '0.3.1'
   "boto3":
-    ensure: '1.3.0'
+    ensure: '1.4.2'
+  "botocore":
+    ensure: '1.4.87'
   "awscli":
-    ensure: '1.10.22'
+    ensure: '1.10.38'
