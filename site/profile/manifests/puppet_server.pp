@@ -3,7 +3,7 @@
 
 class profile::puppet_server {
   class { 'puppetdb::globals':
-    version => hiera('puppetdb::globals:version', '4.0.0-1.el7'),
+    version => hiera('puppetdb::globals:version', '4.3.0-1.el7'),
   }
 
   contain python
