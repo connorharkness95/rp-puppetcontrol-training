@@ -1,4 +1,4 @@
-## 2.1.0 (19 Decembet 2016)
+## 2.1.0 (19 December 2016)
 
 ### IMPROVEMENTS:
 - Upgraded PuppetDB version to 4.3.0-1 and upgraded all support packages to latest available. [TROTP-230]
