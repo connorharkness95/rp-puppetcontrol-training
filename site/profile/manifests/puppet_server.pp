@@ -12,5 +12,13 @@ class profile::puppet_server {
   contain puppetdb::server
   contain hiera
 
+  # If a hash of monit checks has been defined, install and enable watchdog
+  # monitoring.
+  $monit_checks = hiera_hash('profile::puppet_server::monit_checks', undef)
+  if $monit_checks {
+    contain monit
+    create_resources(monit::check, $monit_checks)
+  }
+
   Class['python'] -> Class['rap_puppet_puppetserver']
 }
