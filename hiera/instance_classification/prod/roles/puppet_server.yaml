@@ -45,3 +45,19 @@ python::python_pips:
     ensure: '1.4.87'
   "awscli":
     ensure: '1.10.38'
+
+profile::puppet_server::monit_checks:
+  'puppetserver':
+    content: >
+      check process puppetserver with pidfile /var/run/puppetlabs/puppetserver/puppetserver.pid
+      start program = "/usr/bin/systemctl start puppetserver.service" with timeout 60 seconds
+      stop program = "/usr/bin/systemctl stop puppetserver.service"
+      if failed host 127.0.0.1 port 8140 type tcp for 2 cycles then restart
+      if 5 restarts within 5 cycles then timeout
+  'puppetdb':
+    content: >
+      check process puppetdb with pidfile /var/run/puppetlabs/puppetdb/puppetdb.pid
+      start program = "/usr/bin/systemctl start puppetdb.service" with timeout 60 seconds
+      stop program = "/usr/bin/systemctl stop puppetdb.service"
+      if failed host 127.0.0.1 port 8081 type tcp for 2 cycles then restart
+      if 5 restarts within 5 cycles then timeout
