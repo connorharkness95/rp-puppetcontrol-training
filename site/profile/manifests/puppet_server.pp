@@ -11,6 +11,7 @@ class profile::puppet_server {
   contain puppetdb::master::config
   contain puppetdb::server
   contain hiera
+  contain cloudwatch
 
   # If a hash of monit checks has been defined, install and enable watchdog
   # monitoring.
