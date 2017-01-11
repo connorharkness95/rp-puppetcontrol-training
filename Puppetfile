@@ -33,3 +33,7 @@ forge 'http://forge.puppetlabs.com'
 # mod 'rap_puppet_puppetserver',
 #  :git => 'ssh://gitlab.et-scm.com/tio/rap-puppet-puppetserver.git',
 #  :tag => '1.0.1'
+
+mod 'cloudwatch',
+  :git => "ssh://gitlab.et-scm.com/tio-rap-london/rap-puppet-cloudwatch.git",
+  :tag => '1.4.0'

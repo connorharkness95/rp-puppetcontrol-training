@@ -61,3 +61,54 @@ profile::puppet_server::monit_checks:
       stop program = "/usr/bin/systemctl stop puppetdb.service"
       if failed host 127.0.0.1 port 8081 type tcp for 2 cycles then restart
       if 5 restarts within 5 cycles then timeout
+
+# Provide standard EC2 per-instance CloudWatch metrics indicating the status of
+# critical Puppet Server services. These checks use a custom module to query
+# the service API status endpoints.
+cloudwatch::metric_data:
+ 'prod-puppet-servicestatus-puppetserver':
+    folder_name: '/usr/local/sbin'
+    template_name: 'puppetserver-health-check.py'
+    template_dir: '/usr/local/sbin'
+    cron_name: 'puppet-servicestatus-puppetserver'
+    cron_cmd: '/usr/local/sbin/puppetserver-health-check.py --service puppetserver'
+    cron_hour: '*'
+    cron_minute: '*/5'
+    template_mode: '0755'
+    template_content: 'cloudwatch/puppetserver-health-check.py'
+ 'prod-puppet-servicestatus-puppetdb':
+    template_create: false
+    cron_name: 'puppet-servicestatus-puppetdb'
+    cron_cmd: '/usr/local/sbin/puppetserver-health-check.py --service puppetdb'
+    cron_hour: '*'
+    cron_minute: '*/5'
+
+# Associates an alarm to trigger if a critical Puppet Server service reports
+# a non-functional status. A value of 1 indicates the service is functioning
+# properly, a status of 0 indicates the service is unhealthy or offline.
+#
+# NOTE: These alarms have no defined ALARM or OK action. You will need to
+# associate an SNS topic ARN with each alarm action before alerts will be sent.
+cloudwatch::metric_alarm:
+  prod-puppet-servicestatus-puppetserver:
+    metric: 'PuppetServiceStatus-PuppetServer'
+    dimensions: 'Name=InstanceId,Value=%{::ec2_metadata.instance-id}'
+    namespace: 'AWS/EC2'
+    statistic: 'Maximum'
+    period: '300'
+    evaluation: '2'
+    threshold: '1'
+    comparison: 'LessThanThreshold'
+    alarm_actions: ''
+    ok_actions: ''
+  prod-puppet-servicestatus-puppetdb:
+    metric: 'PuppetServiceStatus-PuppetDB'
+    dimensions: 'Name=InstanceId,Value=%{::ec2_metadata.instance-id}'
+    namespace: 'AWS/EC2'
+    statistic: 'Maximum'
+    period: '300'
+    evaluation: '2'
+    threshold: '1'
+    comparison: 'LessThanThreshold'
+    alarm_actions: ''
+    ok_actions: ''
