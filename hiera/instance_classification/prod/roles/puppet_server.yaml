@@ -63,8 +63,9 @@ profile::puppet_server::monit_checks:
       if 5 restarts within 5 cycles then timeout
 
 # Provide standard EC2 per-instance CloudWatch metrics indicating the status of
-# critical Puppet Server services. These checks use a custom module to query
-# the service API status endpoints.
+# critical Puppet Server services, Puppet agent status and catalog run
+# statistics. These checks use custom modules to query the service API status
+# endpoints and parse agent summary data.
 cloudwatch::metric_data:
  'prod-puppet-servicestatus-puppetserver':
     folder_name: '/usr/local/sbin'
@@ -82,10 +83,24 @@ cloudwatch::metric_data:
     cron_cmd: '/usr/local/sbin/puppetserver-health-check.py --service puppetdb'
     cron_hour: '*'
     cron_minute: '*/5'
+ 'prod-puppet-agent-status':
+    folder_name: '/usr/local/sbin'
+    template_name: 'puppetagent-health-check.py'
+    template_dir: '/usr/local/sbin'
+    cron_name: 'puppet-agent-status'
+    cron_cmd: '/usr/local/sbin/puppetagent-health-check.py'
+    cron_hour: '*'
+    cron_minute: '*/5'
+    template_mode: '0755'
+    template_content: 'cloudwatch/puppetagent-health-check.py'
 
 # Associates an alarm to trigger if a critical Puppet Server service reports
 # a non-functional status. A value of 1 indicates the service is functioning
 # properly, a status of 0 indicates the service is unhealthy or offline.
+#
+# Also configures alarms to trigger if a Puppet agent is administratively
+# disabled, fails to successfully complete a catalog run in the last 70
+# minutes or has/had a catalog run executing for more than 15 minutes.
 #
 # NOTE: These alarms have no defined ALARM or OK action. You will need to
 # associate an SNS topic ARN with each alarm action before alerts will be sent.
@@ -110,5 +125,49 @@ cloudwatch::metric_alarm:
     evaluation: '2'
     threshold: '1'
     comparison: 'LessThanThreshold'
+    alarm_actions: ''
+    ok_actions: ''
+  prod-puppet-agent-lastrun:
+    metric: 'PuppetAgent-LastRun'
+    dimensions: 'Name=InstanceId,Value=%{::ec2_metadata.instance-id}'
+    namespace: 'AWS/EC2'
+    statistic: 'Maximum'
+    period: '300'
+    evaluation: '2'
+    threshold: '4200' # Number of seconds since last catalog run.
+    comparison: 'GreaterThanThreshold'
+    alarm_actions: ''
+    ok_actions: ''
+  prod-puppet-agent-runduration:
+    metric: 'PuppetAgent-RunDuration'
+    dimensions: 'Name=InstanceId,Value=%{::ec2_metadata.instance-id}'
+    namespace: 'AWS/EC2'
+    statistic: 'Maximum'
+    period: '300'
+    evaluation: '2'
+    threshold: '900' # Maximum catalog run duration in seconds.
+    comparison: 'GreaterThanThreshold'
+    alarm_actions: ''
+    ok_actions: ''
+  prod-puppet-agent-lastrunduration:
+    metric: 'PuppetAgent-LastRunDuration'
+    dimensions: 'Name=InstanceId,Value=%{::ec2_metadata.instance-id}'
+    namespace: 'AWS/EC2'
+    statistic: 'Maximum'
+    period: '300'
+    evaluation: '2'
+    threshold: '900' # Maximum catalog run duration in seconds.
+    comparison: 'GreaterThanThreshold'
+    alarm_actions: ''
+    ok_actions: ''
+  prod-puppet-agent-disabled:
+    metric: 'PuppetAgent-Disabled'
+    dimensions: 'Name=InstanceId,Value=%{::ec2_metadata.instance-id}'
+    namespace: 'AWS/EC2'
+    statistic: 'Maximum'
+    period: '300'
+    evaluation: '2'
+    threshold: '0' # Monitor returns 1 if the agent has been disabled.
+    comparison: 'GreaterThanThreshold'
     alarm_actions: ''
     ok_actions: ''
