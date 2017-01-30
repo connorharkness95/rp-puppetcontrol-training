@@ -3,6 +3,7 @@
 - The prod puppet_server hiera role data file includes monit service check definitions for the `puppetserver` and `puppetdb` services. [TROTP-141]
 - The prod puppet_server hiera role data file includes CloudWatch metric and alarm definitions to provide health monitoring of critical Puppet Server services. [TROTP-232]
 - The [rap-puppet-cloudwatch](https://gitlab.et-scm.com/tio-rap-london/rap-puppet-cloudwatch) module is now included in the Puppetfile and included in the site-local puppet_server role. [TROTP-232]
+- The prod puppet_server hiera role data file includes CloudWatch metric and alarm definitions to provide health monitoring of Puppet agent status and catalog run statistics. [TROTP-235]
 
 ## 2.1.0 (19 December 2016)
 
