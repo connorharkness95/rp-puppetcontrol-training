@@ -1,4 +1,4 @@
-## 3.0.0 (Unreleased)
+## 3.0.0 (30 January 2017)
 - The site-local puppet_server profile now includes support for watchdog monitoring of critical puppet services. [TROTP-141]
 - The prod puppet_server hiera role data file includes monit service check definitions for the `puppetserver` and `puppetdb` services. [TROTP-141]
 - The prod puppet_server hiera role data file includes CloudWatch metric and alarm definitions to provide health monitoring of critical Puppet Server services. [TROTP-232]
