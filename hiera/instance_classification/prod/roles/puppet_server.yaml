@@ -50,17 +50,20 @@ profile::puppet_server::monit_checks:
   'puppetserver':
     content: >
       check process puppetserver with pidfile /var/run/puppetlabs/puppetserver/puppetserver.pid
-      start program = "/usr/bin/systemctl start puppetserver.service" with timeout 60 seconds
+      start program = "/usr/bin/systemctl restart puppetserver.service" with timeout 90 seconds
       stop program = "/usr/bin/systemctl stop puppetserver.service"
       if failed host 127.0.0.1 port 8140 type tcp for 2 cycles then restart
-      if 5 restarts within 5 cycles then timeout
   'puppetdb':
     content: >
       check process puppetdb with pidfile /var/run/puppetlabs/puppetdb/puppetdb.pid
-      start program = "/usr/bin/systemctl start puppetdb.service" with timeout 60 seconds
+      start program = "/usr/bin/systemctl restart puppetdb.service" with timeout 60 seconds
       stop program = "/usr/bin/systemctl stop puppetdb.service"
       if failed host 127.0.0.1 port 8081 type tcp for 2 cycles then restart
-      if 5 restarts within 5 cycles then timeout
+  'puppet':
+    content: >
+      check process puppet with pidfile /var/run/puppetlabs/agent.pid
+      start program = "/usr/bin/systemctl restart puppet.service" with timeout 60 seconds
+      stop program = "/usr/bin/systemctl stop puppet.service"
 
 # Provide standard EC2 per-instance CloudWatch metrics indicating the status of
 # critical Puppet Server services, Puppet agent status and catalog run
