@@ -1,3 +1,7 @@
+## 3.0.1 (Unreleased)
+- The monit service checks have been modified to use `systemctl restart` rather than `systemctl start` to resolve a bug that prevents the monitored daemons from restarting when the PID file is not properly removed. [TIOCE-39]
+- A monit service check has been added for puppet agent. [TIOCE-39]
+
 ## 3.0.0 (30 January 2017)
 - The site-local puppet_server profile now includes support for watchdog monitoring of critical puppet services. [TROTP-141]
 - The prod puppet_server hiera role data file includes monit service check definitions for the `puppetserver` and `puppetdb` services. [TROTP-141]
