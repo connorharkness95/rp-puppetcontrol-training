@@ -1,3 +1,10 @@
+## 3.1.0 (Unreleased)
+
+### FIXES:
+
+- The version of rap-puppet-cloudwatch has been bumped to 1.7.0 in the Puppetfile to take advantage of the added `alarm_name` parameter. [TIOCE-74]
+- The default Puppet CloudWatch alarms defined in `hiera/instance_classification/prod/roles/puppet_server.yaml` now include the `alarm_name` parameter and interpolate `instance-id` to ensure uniqueness of the alarm. [TIOCE-74]
+
 ## 3.0.1 (31 January 2017)
 - The monit service checks have been modified to use `systemctl restart` rather than `systemctl start` to resolve a bug that prevents the monitored daemons from restarting when the PID file is not properly removed. [TIOCE-39]
 - A monit service check has been added for the puppet agent service. [TIOCE-39]
