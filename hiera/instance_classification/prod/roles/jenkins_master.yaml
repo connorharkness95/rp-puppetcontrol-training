@@ -83,3 +83,83 @@ jenkins::plugin_hash:
     version: '1.7.1'
   'pipeline-stage-view':
     version: '2.0'
+    
+# Configure:
+#   - Install monit and configure to watch the jenkins service on this instance
+
+profile::jenkins_master::monit_checks:
+  'jenkinsmaster':
+    content: >
+      check process jenkinsmaster with pidfile /var/run/jenkins/jenkins.pid
+      start program = "/bin/systemctl restart jenkins" with timeout 60 seconds
+      stop program = "/bin/systemctl stop jenkins"
+      if failed host 127.0.0.1 port 8080 type tcp for 2 cycles then restart
+      if 5 restarts within 5 cycles then timeout
+
+# Configure:
+#   - Install jenkinsmaster_health_check.py script and setup crontab entry to run it
+
+cloudwatch::metric_data:
+ 'prod-jenkins-servicestatus-jenkinsmaster':
+    folder_name: '/usr/local/sbin'
+    template_name: 'jenkinsmaster_health_check.py'
+    template_dir: '/usr/local/sbin'
+    cron_name: 'jenkins-servicestatus-jenkinsmaster'
+    cron_cmd: '/usr/local/sbin/jenkinsmaster_health_check.py --jenkins-url http://localhost:8080 -j your_job_1 -j your_job_2 -j your_job_3'
+    cron_hour: '*'
+    cron_minute: '*/5'
+    template_mode: '0755'
+    template_content: 'cloudwatch/jenkinsmaster_health_check.py'
+
+# Associates an alarm to trigger if the Jenkins service reports a
+# non-functional status. A status of 1 indicates the service is functioning
+# properly, a status of 0 indicates the service is unhealthy or offline.
+
+cloudwatch::metric_alarm:
+  prod-jenkins-servicestatus-jenkinsmaster:
+    metric: 'JenkinsServiceStatus'
+    alarm_name: 'JenkinsServiceStatus-%{::ec2_metadata.instance-id}'
+    dimensions: 'Name=InstanceId,Value=%{::ec2_metadata.instance-id}'
+    namespace: 'AWS/EC2'
+    statistic: 'Maximum'
+    period: '300'
+    evaluation: '2'
+    threshold: '1'
+    comparison: 'LessThanThreshold'
+    alarm_actions: ''
+    ok_actions: ''
+    
+# Associate an alarm for the status of your_job_1. A value of 1 indicates the
+# last build of the job completed successfully, a value of 0 indicates the last
+# build of the job failed.
+
+  prod-jenkins-jobstatus-your-job-1:
+    metric: 'JenkinsJob-Status-your_job_1'
+    alarm_name: 'JenkinsJob-Status-your_job_1-%{::ec2_metadata.instance-id}'
+    dimensions: 'Name=InstanceId,Value=%{::ec2_metadata.instance-id}'
+    namespace: 'AWS/EC2'
+    statistic: 'Maximum'
+    period: '300'
+    evaluation: '2'
+    threshold: '1'
+    comparison: 'LessThanThreshold'
+    alarm_actions: ''
+    ok_actions: ''
+    
+# Associate an alarm for the last build time of your_job_1. The value returned 
+# is the number of hours since the last build completed. If your_job_1 is scheduled
+# scheduled to run daily, the threshold should be set to 23 hours. A value greater
+# than the threshold, indicates that there may be an issue with the job.
+
+  prod-jenkins-jobruntime-your-job-1:
+    metric: 'JenkinsJob-LastRunTime-your_job_1'
+    alarm_name: 'JenkinsJob-LastRunTime-your_job_1-%{::ec2_metadata.instance-id}'
+    dimensions: 'Name=InstanceId,Value=%{::ec2_metadata.instance-id}'
+    namespace: 'AWS/EC2'
+    statistic: 'Maximum'
+    period: '300'
+    evaluation: '2'
+    threshold: '23'
+    comparison: 'GreaterThanThreshold'
+    alarm_actions: ''
+    ok_actions: ''
