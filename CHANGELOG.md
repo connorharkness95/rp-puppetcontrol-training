@@ -1,3 +1,8 @@
+## 3.2.0 (18 April 2017)
+- The site-local jenkins_master profile now includes support for watchdog monitoring of the jenkins service.
+- The prod jenkins_master hiera role data file includes monit service check definitions for the `jenkinsmaster` service.
+- The prod jenkins_master hiera role data file includes CloudWatch metric and alarm definitions to provide health monitoring of the jenkins service and jobs.
+
 ## 3.1.0 (21 February 2017)
 
 ### FIXES:
