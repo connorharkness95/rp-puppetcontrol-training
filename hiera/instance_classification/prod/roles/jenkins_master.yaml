@@ -94,7 +94,6 @@ profile::jenkins_master::monit_checks:
       start program = "/bin/systemctl restart jenkins" with timeout 60 seconds
       stop program = "/bin/systemctl stop jenkins"
       if failed host 127.0.0.1 port 8080 type tcp for 2 cycles then restart
-      if 5 restarts within 5 cycles then timeout
 
 # Configure:
 #   - Install jenkinsmaster_health_check.py script and setup crontab entry to run it
