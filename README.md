@@ -28,7 +28,7 @@ git clone --bare git@gitlab.et-scm.com:elsevier-core-engineering/rp-puppetcontro
 ```
 3. From within the cloned directory, mirror push to your new control repository.
 ```
-cd rp-puppetcontrol-skeleton
+cd rp-puppetcontrol-skeleton.git
 git push --mirror git@gitlab.et-scm.com:elsevier-core-engineering/rp-puppetcontrol-test.git
 ```
 4. Remove our temporary local repository
