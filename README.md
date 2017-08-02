@@ -34,7 +34,7 @@ git push --mirror git@gitlab.et-scm.com:elsevier-core-engineering/rp-puppetcontr
 4. Remove our temporary local repository
 ```
 cd ..
-rm -rf rp-puppetcontrol-skeleton
+rm -rf rp-puppetcontrol-skeleton.git
 ```
 5. Clone or update the new repository you created
 ```
