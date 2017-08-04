@@ -2,7 +2,7 @@
 # This file should remain unchanged. Changes to your Jenkins Master should be
 # made in profile::jenkins_master.
 
-class role::puppet_server {
+class role::jenkins_master {
   include profile::base
   include profile::jenkins_master
 }
