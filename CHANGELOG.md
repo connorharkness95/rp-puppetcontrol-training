@@ -1,3 +1,16 @@
+## 3.2.1 (Unreleased)
+
+### FIXES:
+
+- Update path to rp-puppet-cloudwatch in Puppetfile. [TIOCE-289]
+- Add rap-puppet-jenkins and jenkins modules to Puppetfile. [TIOCE-289]
+- Upgrade version of Jenkins to 2.60.2-1.1 in jenkins_master.yaml. [TIOCE-289]
+- Update path to rp-jenkinscontrol-skeleton in jenkins_master.yaml. [TIOCE-289]
+- Remove encrypted ssh_private_key but add instructions how to create/encrypt and add one for the current account. [TIOCE-289]
+- Update the list of plugins. [TIOCE-289]
+- Monit health check was failing because check was written for debian. Default is now centos. Add correct code for centos. Also add notes for the correct debian code if needed. [TIOCE-289]
+- Cloudwatch metric_data and metric_alarms default to example job names. Use job-dsl-seed instead since this is a real job and we need to monitor it. Also add notes for how to add additional jobs to be monitored. [TIOCE-289]
+
 ## 3.2.0 (18 April 2017)
 - The site-local jenkins_master profile now includes support for watchdog monitoring of the jenkins service.
 - The prod jenkins_master hiera role data file includes monit service check definitions for the `jenkinsmaster` service.
