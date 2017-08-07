@@ -21,6 +21,11 @@ forge 'http://forge.puppetlabs.com'
 # update the module:
 # mod 'puppetlabs/ntp', :latest
 
+mod "garethr/docker"
+# mod "rtyler/jenkins", "1.6.1"
+mod "puppetlabs/java"
+mod "puppet/archive"
+
 #------------------------------------------------------------------------------
 # Git Modules
 #------------------------------------------------------------------------------
@@ -35,5 +40,13 @@ forge 'http://forge.puppetlabs.com'
 #  :tag => '1.0.1'
 
 mod 'cloudwatch',
-  :git => "ssh://gitlab.et-scm.com/tio-rap-london/rap-puppet-cloudwatch.git",
-  :tag => '1.8.0'
+  :git => "ssh://gitlab.et-scm.com/elsevier-core-engineering/rp-puppet-cloudwatch.git",
+  :tag => '1.9.0'
+
+mod "rap_puppet_jenkins",
+  :git => "ssh://gitlab.et-scm.com/tio/rap-puppet-jenkins.git",
+  :tag => '2.1.1'
+  
+mod 'rtyler/jenkins',
+  :git    => 'https://github.com/elconas/puppet-jenkins.git',
+  :branch => 'fix_749'

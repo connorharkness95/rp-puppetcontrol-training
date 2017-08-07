@@ -10,93 +10,123 @@ classes:
 #   - Jenkins version to install
 #   - Number of executors on the master
 #   - Jenkins firewall to false
-jenkins::version: '2.21'
+jenkins::version: '2.60.2-1.1'
 jenkins::executors: 4
 jenkins::configure_firewall: false
 
 # Configure:
 #   - The JenkinsControl Git repository containing the job configurations
 #   - The directory under jobs which will be used to configure this Jenkins
-rap_puppet_jenkins::seed_job::seed_job_jobs_url: 'git@gitlab.et-scm.com:tio-rap-london/rap-jenkinscontrol-skeleton.git'
+rap_puppet_jenkins::seed_job::seed_job_jobs_url: 'git@gitlab.et-scm.com:elsevier-core-engineering/rp-jenkinscontrol-skeleton.git'
 rap_puppet_jenkins::seed_job::seed_job_jobs_directory: 'prod'
 
 # Configure:
-#   - The ssh private key to use to connect with Git. Encrypted using eyaml
+#----------------------------------------------------------------------------------------
+# Create a deploy key via the gitlab console:
+#   From your project page, select Settings-> Deploy Keys 
+#   Click on 'New Deploy Key'
+#   Click on the work 'here' to see instructions to create the public key
+#   Copy the contents of the *.pub file in the console and then 'Create Deploy Key'
+#
+# Encrypt the private key
+#   From the puppet master, as root cd /etc/puppetlabs/puppet
+#   cp contents of the private keyfile from above to a file on the puppet master
+#   eyaml encrypt -l rap_puppet_jenkins::git::ssh_private_key -f <your private key file>
+#   Copy output to the rap_puppet_jenkins::git::ssh_private_key: line below
+#----------------------------------------------------------------------------------------
 rap_puppet_jenkins::git::ssh_private_key: >
-    ENC[PKCS7,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
-    bClcKqKBZwq+01pTDKv6GFopAhfA3PJv]
 
 # Configure:
 #   - The Jenkins plugins to install and the version
 jenkins::plugin_hash:
+  'pollscm':
+    version: '1.3.1'
   'ace-editor':
     version: '1.1'
   'docker-commons':
-    version: '1.4.0'
+    version: '1.8'
   'handlebars':
     version: '1.1.1'
   'matrix-project':
-    version: '1.7.1'
+    version: '1.11'
   'pipeline-stage-view':
     version: '2.0'
+  'workflow-job':
+    version: '2.12.2'
+  'icon-shim':
+    version: '2.0.3'
+  'momentjs':
+    version: '1.1.1'
+  'scm-api':
+    version: '2.2.0'
+  'workflow-api':
+    version: '2.20'
+  'authentication-tokens':
+    version: '1.3'
+  'durable-task':
+    version: '1.14'
+  'jquery-detached':
+    version: '1.2.1'
+  'script-security':
+    version: '1.30'
+  'workflow-scm-step':
+     version: '2.6'
+  'git-client':
+    version: '2.5.0'
+  'gitlab-plugin':
+    version: '1.4.7'
+  'junit':
+    version: '1.20'
+  'pipeline-input-step':
+    version: '2.7'
+  'ssh-credentials':
+    version: '1.13'
+  'workflow-step-api':
+    version: '2.12'
+  'git':
+    version: '3.5.0'
+  'mailer':
+    version: '1.18'
+  'pipeline-rest-api':
+    version: '2.0'
+  'workflow-cps':
+    version: '2.2'
+  'workflow-support':
+    version: '2.14'
+  'pipeline-stage-step':
+    version: '2.2'
+  'pipeline-graph-analysis':
+    version: '1.1'
+  'job-dsl':
+    version: '1.64'
+  'display-url-api':
+    version: '0.2'
+  'credentials-binding':
+    version: '1.12'
+  'plain-credentials':
+    version: '1.3'
     
 # Configure:
 #   - Install monit and configure to watch the jenkins service on this instance
+#----------------------------------------------------------------------------------------
+#  The block below is valid if the jenkins instance is centos.
+#  If the jenkins instance is debian, change the check process line to the following:
+#    check process jenkinsmaster with pidfile /var/run/jenkins/jenkins.pid
+#----------------------------------------------------------------------------------------
 
 profile::jenkins_master::monit_checks:
   'jenkinsmaster':
     content: >
-      check process jenkinsmaster with pidfile /var/run/jenkins/jenkins.pid
+      check process jenkins with pidfile /var/run/jenkins.pid
       start program = "/bin/systemctl restart jenkins" with timeout 60 seconds
       stop program = "/bin/systemctl stop jenkins"
       if failed host 127.0.0.1 port 8080 type tcp for 2 cycles then restart
 
 # Configure:
 #   - Install jenkinsmaster_health_check.py script and setup crontab entry to run it
+#----------------------------------------------------------------------------------------
+#  Add your jobnames after job-dsl-seed in a space seperated list
+#----------------------------------------------------------------------------------------
 
 cloudwatch::metric_data:
  'prod-jenkins-servicestatus-jenkinsmaster':
@@ -104,15 +134,19 @@ cloudwatch::metric_data:
     template_name: 'jenkinsmaster_health_check.py'
     template_dir: '/usr/local/sbin'
     cron_name: 'jenkins-servicestatus-jenkinsmaster'
-    cron_cmd: '/usr/local/sbin/jenkinsmaster_health_check.py --jenkins-url http://localhost:8080 -j your_job_1 -j your_job_2 -j your_job_3'
+    cron_cmd: '/usr/local/sbin/jenkinsmaster_health_check.py --jenkins-url http://localhost:8080 -j job-dsl-seed'
     cron_hour: '*'
     cron_minute: '*/5'
     template_mode: '0755'
     template_content: 'cloudwatch/jenkinsmaster_health_check.py'
 
-# Associates an alarm to trigger if the Jenkins service reports a
-# non-functional status. A status of 1 indicates the service is functioning
-# properly, a status of 0 indicates the service is unhealthy or offline.
+#----------------------------------------------------------------------------------------
+#   Associates an alarm to trigger if the Jenkins service reports a
+#   non-functional status. A status of 1 indicates the service is functioning
+#   properly, a status of 0 indicates the service is unhealthy or offline.
+#
+#   Set the value of alarm_actions and ok_actions to the arn of an sns topic 
+#----------------------------------------------------------------------------------------
 
 cloudwatch::metric_alarm:
   prod-jenkins-servicestatus-jenkinsmaster:
@@ -127,14 +161,21 @@ cloudwatch::metric_alarm:
     comparison: 'LessThanThreshold'
     alarm_actions: ''
     ok_actions: ''
-    
-# Associate an alarm for the status of your_job_1. A value of 1 indicates the
-# last build of the job completed successfully, a value of 0 indicates the last
-# build of the job failed.
 
-  prod-jenkins-jobstatus-your-job-1:
-    metric: 'JenkinsJob-Status-your_job_1'
-    alarm_name: 'JenkinsJob-Status-your_job_1-%{::ec2_metadata.instance-id}'
+#----------------------------------------------------------------------------------------    
+#   Associate an alarm for the status of job-dsl-seed. A value of 1 indicates the
+#   last build of the job completed successfully, a value of 0 indicates the last
+#   build of the job failed.
+#
+#   Duplicate this block for any other jobs that should be monitoried. Replace job-dsl-seed
+#   with your job name.
+#
+#   Set the value of alarm_actions and ok_actions to the arn of an sns topic
+#----------------------------------------------------------------------------------------
+
+  prod-jenkins-jobstatus-job-dsl-seed:
+    metric: 'JenkinsJob-Status-job-dsl-seed'
+    alarm_name: 'JenkinsJob-Status-job-dsl-seed-%{::ec2_metadata.instance-id}'
     dimensions: 'Name=InstanceId,Value=%{::ec2_metadata.instance-id}'
     namespace: 'AWS/EC2'
     statistic: 'Maximum'
@@ -145,20 +186,28 @@ cloudwatch::metric_alarm:
     alarm_actions: ''
     ok_actions: ''
     
-# Associate an alarm for the last build time of your_job_1. The value returned 
-# is the number of hours since the last build completed. If your_job_1 is scheduled
-# scheduled to run daily, the threshold should be set to 23 hours. A value greater
-# than the threshold, indicates that there may be an issue with the job.
+#----------------------------------------------------------------------------------------
+#   Associate an alarm for the last build time of job-dsl-seed. The value returned 
+#   is the number of hours since the last build completed. The job-dsl-seed is scheduled
+#   scheduled to run every 5 minutes, the threshold below is set to 1 hour. A value greater
+#   than the threshold, indicates that there may be an issue with the job.
+#
+#   Duplicate this block for any other jobs that should be monitoried. Replace job-dsl-seed
+#   with your job name. If your-job is scheduled to run daily, the threshold should be set 
+#   to 23 hours.
+#
+#   Set the value of alarm_actions and ok_actions to the arn of an sns topic
+#----------------------------------------------------------------------------------------
 
-  prod-jenkins-jobruntime-your-job-1:
-    metric: 'JenkinsJob-LastRunTime-your_job_1'
-    alarm_name: 'JenkinsJob-LastRunTime-your_job_1-%{::ec2_metadata.instance-id}'
+  prod-jenkins-jobruntime-job-dsl-seed:
+    metric: 'JenkinsJob-LastRunTime-job-dsl-seed'
+    alarm_name: 'JenkinsJob-LastRunTime-job-dsl-seed-%{::ec2_metadata.instance-id}'
     dimensions: 'Name=InstanceId,Value=%{::ec2_metadata.instance-id}'
     namespace: 'AWS/EC2'
     statistic: 'Maximum'
     period: '300'
     evaluation: '2'
-    threshold: '23'
+    threshold: '1'
     comparison: 'GreaterThanThreshold'
     alarm_actions: ''
     ok_actions: ''
