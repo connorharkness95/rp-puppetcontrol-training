@@ -93,18 +93,14 @@ jenkins::plugin_hash:
     version: '2.0'
   'ssh-credentials':
     version: '1.13'
-  'credentials':
-    version: '2.1.13'
   'git-client':
     version: '2.5.0'
+  'display-url-api':
+    version: '0.2'
   'mailer':
     version: '1.18'
   'matrix-project':
     version: '1.7.1'
-  'structs':
-    version: '1.9'
-  'git':
-    version: '3.5.0'
     
 # Configure:
 #   - Install monit and configure to watch the jenkins service on this instance
