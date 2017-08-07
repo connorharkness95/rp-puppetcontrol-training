@@ -1,4 +1,4 @@
-## 3.2.1 (Unreleased)
+## 3.2.1 (7 August 2017)
 
 ### FIXES:
 
