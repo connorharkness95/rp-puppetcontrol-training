@@ -25,6 +25,7 @@ mod "garethr/docker"
 # mod "rtyler/jenkins", "1.6.1"
 mod "puppetlabs/java"
 mod "puppet/archive"
+mod 'puppetlabs/git'
 
 #------------------------------------------------------------------------------
 # Git Modules
