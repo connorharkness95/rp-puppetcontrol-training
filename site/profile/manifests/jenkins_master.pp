@@ -4,6 +4,7 @@
 class profile::jenkins_master {
 
   contain docker
+  contain git
   contain rap_puppet_jenkins
   contain cloudwatch
   
