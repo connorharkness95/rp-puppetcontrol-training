@@ -45,7 +45,7 @@ mod 'cloudwatch',
   :tag => '1.9.0'
 
 mod "rap_puppet_jenkins",
-  :git => "ssh://gitlab.et-scm.com/tio/rap-puppet-jenkins.git",
+  :git => "ssh://gitlab.et-scm.com/elsevier-core-engineering/rp-puppet-jenkins.git",
   :tag => '2.1.1'
   
 mod 'rtyler/jenkins',
