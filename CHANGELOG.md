@@ -1,3 +1,7 @@
+## 3.2.2 (Unreleased)
+
+- Add final list of plugins to allow the job-dsl-seed job to execute correctly when pointed at a valid jenkinscontrol repo
+
 ## 3.2.1 (7 August 2017)
 
 ### FIXES:
