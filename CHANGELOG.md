@@ -1,3 +1,7 @@
+## 3.3.0 (16 January 2018)
+
+- Updated yaml file to reflect jenkins refactoring changes. [TIOCE-292] [TIOCE-293] [TIOCE-294] [TIOCE-297]
+
 ## 3.2.2 (10 August 2017)
 
 - Add final list of plugins to allow the job-dsl-seed job to execute correctly when pointed at a valid jenkinscontrol repo
