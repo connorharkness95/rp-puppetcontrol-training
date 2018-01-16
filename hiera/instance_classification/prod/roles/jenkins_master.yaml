@@ -7,23 +7,29 @@ classes:
   - rap_puppet_jenkins::git
 
 # Configure:
-#   - Jenkins version to install
 #   - Number of executors on the master
 #   - Jenkins firewall to false
-jenkins::version: '2.60.2-1.1'
-jenkins::executors: 4
-jenkins::configure_firewall: false
-
-# Configure:
+rap_puppet_jenkins::params::executors: 2
+rap_puppet_jenkins::params::configure_firewall: false
 #   - The JenkinsControl Git repository containing the job configurations
 #   - The directory under jobs which will be used to configure this Jenkins
 rap_puppet_jenkins::seed_job::seed_job_jobs_url: 'git@gitlab.et-scm.com:elsevier-core-engineering/rp-jenkinscontrol-skeleton.git'
 rap_puppet_jenkins::seed_job::seed_job_jobs_directory: 'prod'
+#   - Configure which version of Jenkins to use, LTS or the latest.
+#     Does not support specified versions.
+rap_puppet_jenkins::lts_or_latest_version: 'LTS'
+#   - Add any additional Java Arguments, such as -Xms and -Xmx, if neccessary.
+rap_puppet_jenkins::custom_java_args: ''
+#   - Configure Jenkins backup and recovery mechanism.
+#     job_history_bucket requires an s3 bucket.
+rap_puppet_jenkins::job_history_bucket: ''
+rap_puppet_jenkins::job_history_hour: [2,14,20]
+rap_puppet_jenkins::job_history_minute: "15"
 
 # Configure:
 #----------------------------------------------------------------------------------------
 # Create a deploy key via the gitlab console:
-#   From your project page, select Settings-> Deploy Keys 
+#   From your project page, select Settings-> Deploy Keys
 #   Click on 'New Deploy Key'
 #   Click on the work 'here' to see instructions to create the public key
 #   Copy the contents of the *.pub file in the console and then 'Create Deploy Key'
@@ -38,104 +44,18 @@ rap_puppet_jenkins::git::ssh_private_key: >
 
 # Configure:
 #   - The Jenkins plugins to install and the version
-jenkins::plugin_hash:
-  'pollscm':
-    version: '1.3.1'
-  'ace-editor':
-    version: '1.1'
-  'docker-commons':
-    version: '1.8'
-  'handlebars':
-    version: '1.1.1'
-  'matrix-project':
-    version: '1.11'
-  'pipeline-stage-view':
-    version: '2.4'
-  'workflow-job':
-    version: '2.12.2'
-  'icon-shim':
-    version: '2.0.3'
-  'momentjs':
-    version: '1.1.1'
-  'scm-api':
-    version: '2.2.0'
-  'workflow-api':
-    version: '2.20'
-  'authentication-tokens':
-    version: '1.3'
-  'durable-task':
-    version: '1.14'
-  'jquery-detached':
-    version: '1.2.1'
-  'script-security':
-    version: '1.30'
-  'workflow-scm-step':
-     version: '2.6'
+rap_puppet_jenkins::specify_plugins_hash:
   'git-client':
     version: '2.5.0'
   'gitlab-plugin':
     version: '1.4.7'
-  'junit':
-    version: '1.20'
-  'pipeline-input-step':
-    version: '2.7'
-  'ssh-credentials':
-    version: '1.13'
-  'workflow-step-api':
-    version: '2.12'
   'git':
     version: '3.5.0'
-  'mailer':
-    version: '1.18'
-  'pipeline-rest-api':
-    version: '2.8'
-  'workflow-cps':
-    version: '2.24'
-  'workflow-support':
-    version: '2.14'
-  'pipeline-stage-step':
-    version: '2.2'
-  'pipeline-graph-analysis':
-    version: '1.1'
   'job-dsl':
     version: '1.64'
-  'display-url-api':
-    version: '0.2'
-  'credentials-binding':
-    version: '1.12'
-  'plain-credentials':
-    version: '1.3'
-  'pipeline-milestone-step':
-    version: '1.3'
-  'pipeline-build-step':
-    version: '2.4'
-  'docker-workflow':
-    version: '1.9'
-  'pipeline-model-api':
-    version: '1.0'
-  'pipeline-model-declarative-agent':
-    version: '1.0'
-  'pipeline-stage-tags-metadata':
-    version: '1.0'
-  'pipeline-model-definition':
-    version: '1.0'
-  'workflow-multibranch':
-    version: '2.9.2'
-  'cloudbees-folder':
-    version: '5.12'
   'git-server':
     version: '1.5'
-  'branch-api':
-    version: '1.11'
-  'workflow-cps-global-lib':
-    version: '2.5'
-  'workflow-basic-steps':
-    version: '2.3'
-  'workflow-durable-task-step':
-    version: '2.8'
-  'workflow-aggregator':
-    version: '2.5'
-    
+
 # Configure:
 #   - Install monit and configure to watch the jenkins service on this instance
 #----------------------------------------------------------------------------------------
@@ -158,41 +78,41 @@ profile::jenkins_master::monit_checks:
 #  Add your jobnames after job-dsl-seed in a space seperated list
 #----------------------------------------------------------------------------------------
 
-cloudwatch::metric_data:
- 'prod-jenkins-servicestatus-jenkinsmaster':
-    folder_name: '/usr/local/sbin'
-    template_name: 'jenkinsmaster_health_check.py'
-    template_dir: '/usr/local/sbin'
-    cron_name: 'jenkins-servicestatus-jenkinsmaster'
-    cron_cmd: '/usr/local/sbin/jenkinsmaster_health_check.py --jenkins-url http://localhost:8080 -j job-dsl-seed'
-    cron_hour: '*'
-    cron_minute: '*/5'
-    template_mode: '0755'
-    template_content: 'cloudwatch/jenkinsmaster_health_check.py'
+#cloudwatch::metric_data:
+# 'prod-jenkins-servicestatus-jenkinsmaster':#
+#    folder_name: '/usr/local/sbin'
+#    template_name: 'jenkinsmaster_health_check.py'
+#    template_dir: '/usr/local/sbin'
+#    cron_name: 'jenkins-servicestatus-jenkinsmaster'
+#    cron_cmd: '/usr/local/sbin/jenkinsmaster_health_check.py --jenkins-url http://localhost:8080 -j job-dsl-seed'
+#    cron_hour: '*'
+#    cron_minute: '*/5'
+#    template_mode: '0755'
+#    template_content: 'cloudwatch/jenkinsmaster_health_check.py'
 
 #----------------------------------------------------------------------------------------
 #   Associates an alarm to trigger if the Jenkins service reports a
 #   non-functional status. A status of 1 indicates the service is functioning
 #   properly, a status of 0 indicates the service is unhealthy or offline.
 #
-#   Set the value of alarm_actions and ok_actions to the arn of an sns topic 
+#   Set the value of alarm_actions and ok_actions to the arn of an sns topic
 #----------------------------------------------------------------------------------------
 
-cloudwatch::metric_alarm:
-  prod-jenkins-servicestatus-jenkinsmaster:
-    metric: 'JenkinsServiceStatus'
-    alarm_name: 'JenkinsServiceStatus-%{::ec2_metadata.instance-id}'
-    dimensions: 'Name=InstanceId,Value=%{::ec2_metadata.instance-id}'
-    namespace: 'AWS/EC2'
-    statistic: 'Maximum'
-    period: '300'
-    evaluation: '2'
-    threshold: '1'
-    comparison: 'LessThanThreshold'
-    alarm_actions: ''
-    ok_actions: ''
+#cloudwatch::metric_alarm:
+#  prod-jenkins-servicestatus-jenkinsmaster:
+#    metric: 'JenkinsServiceStatus'
+#    alarm_name: 'JenkinsServiceStatus-%{::ec2_metadata.instance-id}'
+#    dimensions: 'Name=InstanceId,Value=%{::ec2_metadata.instance-id}'
+#    namespace: 'AWS/EC2'
+#    statistic: 'Maximum'
+#    period: '300'
+#    evaluation: '2'
+#    threshold: '1'
+#    comparison: 'LessThanThreshold'
+#    alarm_actions: ''
+#    ok_actions: ''
 
-#----------------------------------------------------------------------------------------    
+#----------------------------------------------------------------------------------------
 #   Associate an alarm for the status of job-dsl-seed. A value of 1 indicates the
 #   last build of the job completed successfully, a value of 0 indicates the last
 #   build of the job failed.
@@ -203,41 +123,41 @@ cloudwatch::metric_alarm:
 #   Set the value of alarm_actions and ok_actions to the arn of an sns topic
 #----------------------------------------------------------------------------------------
 
-  prod-jenkins-jobstatus-job-dsl-seed:
-    metric: 'JenkinsJob-Status-job-dsl-seed'
-    alarm_name: 'JenkinsJob-Status-job-dsl-seed-%{::ec2_metadata.instance-id}'
-    dimensions: 'Name=InstanceId,Value=%{::ec2_metadata.instance-id}'
-    namespace: 'AWS/EC2'
-    statistic: 'Maximum'
-    period: '300'
-    evaluation: '2'
-    threshold: '1'
-    comparison: 'LessThanThreshold'
-    alarm_actions: ''
-    ok_actions: ''
-    
+#  prod-jenkins-jobstatus-job-dsl-seed:
+#    metric: 'JenkinsJob-Status-job-dsl-seed'
+#    alarm_name: 'JenkinsJob-Status-job-dsl-seed-%{::ec2_metadata.instance-id}'
+#    dimensions: 'Name=InstanceId,Value=%{::ec2_metadata.instance-id}'
+#    namespace: 'AWS/EC2'
+#    statistic: 'Maximum'
+#    period: '300'
+#    evaluation: '2'
+#    threshold: '1'
+#    comparison: 'LessThanThreshold'
+#    alarm_actions: ''
+#    ok_actions: ''
+
 #----------------------------------------------------------------------------------------
-#   Associate an alarm for the last build time of job-dsl-seed. The value returned 
+#   Associate an alarm for the last build time of job-dsl-seed. The value returned
 #   is the number of hours since the last build completed. The job-dsl-seed is scheduled
 #   scheduled to run every 5 minutes, the threshold below is set to 1 hour. A value greater
 #   than the threshold, indicates that there may be an issue with the job.
 #
 #   Duplicate this block for any other jobs that should be monitoried. Replace job-dsl-seed
-#   with your job name. If your-job is scheduled to run daily, the threshold should be set 
+#   with your job name. If your-job is scheduled to run daily, the threshold should be set
 #   to 23 hours.
 #
 #   Set the value of alarm_actions and ok_actions to the arn of an sns topic
 #----------------------------------------------------------------------------------------
 
-  prod-jenkins-jobruntime-job-dsl-seed:
-    metric: 'JenkinsJob-LastRunTime-job-dsl-seed'
-    alarm_name: 'JenkinsJob-LastRunTime-job-dsl-seed-%{::ec2_metadata.instance-id}'
-    dimensions: 'Name=InstanceId,Value=%{::ec2_metadata.instance-id}'
-    namespace: 'AWS/EC2'
-    statistic: 'Maximum'
-    period: '300'
-    evaluation: '2'
-    threshold: '1'
-    comparison: 'GreaterThanThreshold'
-    alarm_actions: ''
-    ok_actions: ''
+#  prod-jenkins-jobruntime-job-dsl-seed:
+#    metric: 'JenkinsJob-LastRunTime-job-dsl-seed'
+#    alarm_name: 'JenkinsJob-LastRunTime-job-dsl-seed-%{::ec2_metadata.instance-id}'
+#    dimensions: 'Name=InstanceId,Value=%{::ec2_metadata.instance-id}'
+#    namespace: 'AWS/EC2'
+#    statistic: 'Maximum'
+#    period: '300'
+#    evaluation: '2'
+#    threshold: '1'
+#    comparison: 'GreaterThanThreshold'
+#    alarm_actions: ''
+#    ok_actions: ''
