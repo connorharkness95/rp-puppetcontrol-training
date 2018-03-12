@@ -1,3 +1,7 @@
+## 3.4.0 (Unreleased)
+
+ - Add container_server and container_agent hiera role and assosiated site roles and profiles.
+
 ## 3.3.0 (16 January 2018)
 
 - Updated yaml file to reflect jenkins refactoring changes. [TIOCE-292] [TIOCE-293] [TIOCE-294] [TIOCE-297]
