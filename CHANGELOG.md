@@ -1,4 +1,4 @@
-## 3.4.0 (Unreleased)
+## 3.4.0 (12 March 2018)
 
  - Add container_server and container_agent hiera role and assosiated site roles and profiles.
 
