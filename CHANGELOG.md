@@ -1,4 +1,4 @@
-## 4.0.0 (Unreleased)
+## 4.0.0 (11 June 2019)
 
  - Changes to support version 4.0.0 of rp-terraform-puppetserver. These changes pull code in from the rp-puppetcontrol-global to break the dependency on that repo. [TIOCE-659]
 
