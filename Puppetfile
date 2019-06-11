@@ -21,11 +21,26 @@ forge 'http://forge.puppetlabs.com'
 # update the module:
 # mod 'puppetlabs/ntp', :latest
 
-mod "garethr/docker"
-# mod "rtyler/jenkins", "1.6.1"
-mod "puppetlabs/java"
-mod "puppet/archive"
+mod 'puppetlabs-concat'
+mod 'puppetlabs-stdlib'
+mod 'puppetlabs/apt'
+mod 'puppetlabs/puppetserver_gem'
+mod 'puppetlabs/inifile'
+mod 'puppetlabs/firewall', '1.12.0'
+mod 'puppetlabs/accounts', "1.0.0"
+mod 'puppetlabs/java'
 mod 'puppetlabs/git'
+mod 'puppetlabs/docker', '3.4.0'
+
+# Community Forge Modules
+mod 'puppet/collectd'
+mod 'puppet/archive'
+mod 'hunner/hiera'
+mod 'stahnma/epel'
+mod 'stankevich/python'
+mod "saz/sudo", "3.1.0"
+mod "soli/monit", "1.2.0"
+mod 'AlexCline/dirtree', '0.2.1'
 
 #------------------------------------------------------------------------------
 # Git Modules
@@ -36,13 +51,10 @@ mod 'puppetlabs/git'
 #  :ref => 'experimental_feature'
 # ---
 # To install the module and pin to the 1.0.1 release tag (preferred method):
-# mod 'rap_puppet_puppetserver',
-#  :git => 'ssh://gitlab.et-scm.com/tio/rap-puppet-puppetserver.git',
-#  :tag => '1.0.1'
 
-mod 'cloudwatch',
-  :git => "ssh://gitlab.et-scm.com/elsevier-core-engineering/rp-puppet-cloudwatch.git",
-  :tag => '1.9.0'
+mod 'rap_puppet_puppetserver',
+  :git => 'ssh://gitlab.et-scm.com/elsevier-core-engineering/rp-puppet-puppetserver.git',
+  :tag => '1.5.1'
 
 mod "rap_puppet_jenkins",
   :git => "ssh://gitlab.et-scm.com/elsevier-core-engineering/rp-puppet-jenkins.git",

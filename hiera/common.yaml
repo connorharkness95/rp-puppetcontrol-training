@@ -2,6 +2,7 @@
 # directives defined here will be applied to all nodes in your environment.
 ---
 classes:
+  - epel
   - profile::base
 
 # Ensures the sudo configuration directory (/etc/sudoers.d/) is not
