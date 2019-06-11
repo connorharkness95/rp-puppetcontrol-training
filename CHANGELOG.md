@@ -1,3 +1,7 @@
+## 4.0.0 (Unreleased)
+
+ - Changes to support version 4.0.0 of rp-terraform-puppetserver. These changes pull code in from the rp-puppetcontrol-global to break the dependency on that repo. [TIOCE-659]
+
 ## 3.4.0 (12 March 2018)
 
  - Add container_server and container_agent hiera role and assosiated site roles and profiles.
