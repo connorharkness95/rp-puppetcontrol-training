@@ -13,7 +13,7 @@ rap_puppet_jenkins::params::executors: 2
 rap_puppet_jenkins::params::configure_firewall: false
 #   - The JenkinsControl Git repository containing the job configurations
 #   - The directory under jobs which will be used to configure this Jenkins
-rap_puppet_jenkins::seed_job::seed_job_jobs_url: 'git@gitlab.et-scm.com:elsevier-core-engineering/rp-jenkinscontrol-skeleton.git'
+rap_puppet_jenkins::seed_job::seed_job_jobs_url: 'git@github.com:elsevier-centraltechnology/rp-jenkinscontrol-skeleton.git'
 rap_puppet_jenkins::seed_job::seed_job_jobs_directory: 'prod'
 #   - Configure which version of Jenkins to use, LTS or the latest.
 #     Does not support specified versions.
