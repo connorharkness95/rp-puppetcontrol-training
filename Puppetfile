@@ -27,7 +27,7 @@ mod 'puppetlabs/apt'
 mod 'puppetlabs/puppetserver_gem'
 mod 'puppetlabs/inifile'
 mod 'puppetlabs/firewall', '1.12.0'
-mod 'puppetlabs/accounts', "1.0.0"
+mod 'puppetlabs/accounts', '1.0.0'
 mod 'puppetlabs/java'
 mod 'puppetlabs/git'
 mod 'puppetlabs/docker', '3.4.0'
@@ -38,8 +38,8 @@ mod 'puppet/archive'
 mod 'hunner/hiera'
 mod 'stahnma/epel'
 mod 'stankevich/python'
-mod "saz/sudo", "3.1.0"
-mod "soli/monit", "1.2.0"
+mod 'saz/sudo', '6.0.0'
+mod 'soli/monit', '1.2.0'
 mod 'AlexCline/dirtree', '0.2.1'
 
 #------------------------------------------------------------------------------
@@ -56,8 +56,8 @@ mod 'rap_puppet_puppetserver',
   :git => 'ssh://gitlab.et-scm.com/elsevier-core-engineering/rp-puppet-puppetserver.git',
   :tag => '1.5.1'
 
-mod "rap_puppet_jenkins",
-  :git => "ssh://gitlab.et-scm.com/elsevier-core-engineering/rp-puppet-jenkins.git",
+mod 'rap_puppet_jenkins',
+  :git => 'ssh://gitlab.et-scm.com/elsevier-core-engineering/rp-puppet-jenkins.git',
   :tag => '2.1.1'
   
 mod 'rtyler/jenkins',
