@@ -8,7 +8,6 @@ class profile::base {
   $accounts = hiera_hash('accounts::users', undef)
   if $accounts {
     contain sudo
-    contain sudo::configs
 
     create_resources('accounts::user', $accounts)
   }

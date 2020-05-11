@@ -1,3 +1,7 @@
+## 5.0.0 (Unreleased)
+
+ - Changes to update module versions to support upgrade to puppet 5. The new mod version for saz/sudo requires a change to site/profile/manifests/base.pp as noted in the Puppetfile.
+
 ## 4.0.0 (11 June 2019)
 
  - Changes to support version 4.0.0 of rp-terraform-puppetserver. These changes pull code in from the rp-puppetcontrol-global to break the dependency on that repo. [TIOCE-659]
