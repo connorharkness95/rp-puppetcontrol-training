@@ -1,4 +1,4 @@
-## 5.0.0 (Unreleased)
+## 5.0.0 (11 May 2020)
 
  - Changes to update module versions to support upgrade to puppet 5. The new mod version for saz/sudo requires a change to site/profile/manifests/base.pp as noted in the Puppetfile.
 
