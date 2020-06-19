@@ -48,7 +48,7 @@ mod 'soli/monit', '2.0.1'                      # Compatible Puppet >= 3.0.0  < 6
 #------------------------------------------------------------------------------
 # To install the module and track the 'experimental_feature' branch:
 # mod 'rap_puppet_puppetserver',
-#  :git => 'ssh://gitlab.et-scm.com/tio/rap-puppet-puppetserver.git',
+#  :git => 'ssh://github.com/elsevier-centraltechnology/rp-puppet-puppetserver.git',
 #  :ref => 'experimental_feature'
 # ---
 # To install the module and pin to the 1.0.1 release tag (preferred method):

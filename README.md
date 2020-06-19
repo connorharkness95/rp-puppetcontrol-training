@@ -40,8 +40,3 @@ rm -rf rp-puppetcontrol-skeleton.git
 ```
 git clone git@github.com:elsevier-centraltechnology/rp-puppetcontrol-test.git
 ```
-6. Enable the Puppet_DeployKey deploy key on your new repository.
-  * Browse to [GitLab](https://gitlab.et-scm.com/)
-  * Navigate to the new repository you created
-  * Select `Settings` -> `Deploy Keys`
-  * Locate `Puppet_DeployKey` from the list of available deploy keys, select `Enable`
