@@ -23,7 +23,7 @@ forge 'http://forge.puppetlabs.com'
 
 # Modules from the Puppet Forge
 mod 'puppetlabs/concat', '6.2.0'               # Compatible Puppet >= 5.5.10 < 7.0.0
-mod 'puppetlabs/stdlib', '6.2.0'               # Compatible Puppet >= 5.5.10 < 7.0.0
+mod 'puppetlabs/stdlib', '4.25.1'              # Compatible Puppet >= 5.5.10 < 7.0.0 stdlib < 5.0.0 required by many other modules
 mod 'puppetlabs/apt', '7.4.1'                  # Compatible Puppet >= 5.5.10 < 7.0.0
 mod 'puppetlabs/puppetserver_gem', '1.1.1'     # Compatible Puppet >= 4.0.0  < 7.0.0
 mod 'puppetlabs/inifile', '4.3.0'              # Compatible Puppet >= 5.5.10 < 7.0.0
