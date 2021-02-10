@@ -1,3 +1,11 @@
+## 6.0.0 (Unreleased)
+
+### IMPROVEMENTS:
+ - Changes to update module version to support upgrade to puppet server 6 and Hiera version 5. These changes include the follow:
+ - Updated puppet module versions in the Puppetfile to support puppet 6 upgrade. Added a new module puppetlabs/puppet_authorization that is required to allow use of the puppetserver ca command set.
+ - Updated site/profile/manifests/puppet_server.pp. There are puppet_authorization rules added that make use of the new puppet module added in Puppetfile.
+ - Updated hiera/instance_classification/prod/roles/puppet_server.yaml. These updates are to support upgrade to Hiera version 5. Hiera 5 is backwards-compatible, so there should be no trouble moving up to 5.
+
 ## 5.0.0 (11 May 2020)
 
  - Changes to update module versions to support upgrade to puppet 5. The new mod version for saz/sudo requires a change to site/profile/manifests/base.pp as noted in the Puppetfile.
