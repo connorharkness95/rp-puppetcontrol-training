@@ -1,4 +1,4 @@
-## 6.0.0 (Unreleased)
+## 6.0.0 (10 Feb 2021)
 
 ### IMPROVEMENTS:
  - Changes to update module version to support upgrade to puppet server 6 and Hiera version 5. These changes include the follow:
