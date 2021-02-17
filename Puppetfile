@@ -60,7 +60,7 @@ mod 'soli/monit', '2.0.1'                      # Compatible Puppet >= 3.0.0  < 6
 
 mod 'rap_puppet_puppetserver',
   :git => 'git@github.com:elsevier-centraltechnology/rp-puppet-puppetserver.git',
-  :tag => '1.6.5'
+  :tag => '1.6.6'
 
 mod 'rap_puppet_jenkins',
   :git => 'git@github.com:elsevier-centraltechnology/rp-puppet-jenkins.git',
