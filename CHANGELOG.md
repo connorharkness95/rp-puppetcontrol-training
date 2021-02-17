@@ -1,4 +1,4 @@
-## 6.0.1 (Unreleased)
+## 6.0.1 (17 Feb 2021)
 
  - Update module versions for rp-puppet-puppetserver to support upgrade to puppet 6.
 
