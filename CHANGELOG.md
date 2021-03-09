@@ -1,3 +1,7 @@
+## 6.0.2 (09 Mar 2021)
+
+ - Remove hiera/instance_classification/prod/roles/container_agent.yaml and container_server.yaml as they are no longer needed.
+
 ## 6.0.1 (17 Feb 2021)
 
  - Update module versions for rp-puppet-puppetserver to support upgrade to puppet 6.
